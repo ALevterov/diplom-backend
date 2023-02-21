@@ -9,16 +9,16 @@ const initialThematics = [
 	},
 	{
 		name: 'IT',
-		keywords: ['javascript', 'js', 'python', 'код', 'cod', 'sql', 'it', 'php', 'java', 'c++', 'с#']
+		keywords: ['javascript', 'js', 'python', 'код', 'code', 'sql', 'php', 'java', 'с#']
 	},
 	{
 		name: 'Администрирование',
-		keywords: ['linux', 'ubuntu', 'debian', 'cd', 'nano', 'sudo', 'systemctl', 'apache', 'nginx', 'apt']
+		keywords: ['linux', 'ubuntu', 'debian', 'nano', 'sudo', 'systemctl', 'apache', 'nginx', 'apt']
 	},
-	{
-		name: 'Сети',
-		keywords: ['ospf', 'isis', 'tcp', 'ip', 'ftp', 'ssh', 'smtp', 'ethernet']
-	},
+	// {
+	// 	name: 'Сети',
+	// 	keywords: ['ospf', 'isis', 'tcp', 'ip', 'ftp', 'ssh', 'smtp', 'ethernet']
+	// },
 	{
 		name: 'Развлечения',
 		keywords: ['youtube', 'игр', 'play', 'досуг', 'танц', 'общен', 'казин', 'отпуск', 'прогулк', 'хобби', 'вечер', 'музык']
