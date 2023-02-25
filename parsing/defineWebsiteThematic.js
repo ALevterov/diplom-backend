@@ -7,15 +7,15 @@ const { defineWordCount } = require('./defineWordCount')
 const { cutStylesAndScripts } = require('./cutStylesAndScripts')
 const { defineThematicByWordsCount } = require('./defineThematicByWordsCount')
 
-// let httpsAgent = new HttpsProxyAgent({
-//   protocol: 'http',
-//   host: '10.33.78.12',
-//   port: 3333,
-//   rejectUnauthorized: false,
-// })
+let httpsAgent = new HttpsProxyAgent({
+  protocol: 'http',
+  host: '10.33.74.3',
+  port: 3333,
+  rejectUnauthorized: false,
+})
 
-// instance = axios.create({httpsAgent, proxy: false})
-instance = axios.create()
+instance = axios.create({httpsAgent, proxy: false})
+// instance = axios.create()
 
 const { JSDOM } = jsdom
 const defineThematic = async url => {
@@ -46,6 +46,7 @@ const defineThematic = async url => {
         console.log(url + link + ' completed!!')
       } catch (e) {
         console.log(e)
+        continue
       }
     }
 
@@ -54,7 +55,7 @@ const defineThematic = async url => {
     return { thematics, definedThematic }
   } catch (e) {
     console.log(e)
-    return e
+    return
   }
 }
 
