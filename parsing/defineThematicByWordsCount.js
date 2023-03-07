@@ -6,7 +6,11 @@ const sortFunc = (a,b) => {
  }
 function defineThematicByWordsCount(thematic) {
 	thematic.sort(sortFunc)
-	return thematic[0].name
+	console.log(thematic[0].count);
+	if(thematic[0].count) {
+		return thematic[0].name
+	}
+	return null	
 }
 
 module.exports = {

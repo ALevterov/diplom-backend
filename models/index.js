@@ -20,8 +20,14 @@ const Thematic = sequelize.define('thematic', {
   name: { type: DataTypes.STRING, unique: true },
   keywords: { type: DataTypes.ARRAY(DataTypes.STRING) },
 })
+const ClassifiedURLs = sequelize.define('ClassifiedURLs', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  url: { type: DataTypes.STRING, unique: true },
+  thematic: { type: DataTypes.STRING },
+})
 module.exports = {
   ClassifiedWebsites,
   User,
-	Thematic
+	Thematic,
+  ClassifiedURLs
 }

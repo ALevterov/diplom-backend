@@ -9,7 +9,7 @@ const { defineThematicByWordsCount } = require('./defineThematicByWordsCount')
 
 let httpsAgent = new HttpsProxyAgent({
   protocol: 'http',
-  host: '10.33.74.3',
+  host: '10.33.78.12',
   port: 3333,
   rejectUnauthorized: false,
 })
@@ -26,7 +26,15 @@ const defineThematic = async url => {
       return thm.dataValues
     })
 
-    const { data } = await instance.get(url)
+    const { data } = await instance.get(url).catch(e => {
+      console.log(e.message);
+      return {data: null} // если есть ошибка, продолажем работать
+    })
+
+    if(data === null) {
+      return {definedThematic: null}
+    }
+
     const dom = new JSDOM(data)
 
     cutStylesAndScripts(dom)
@@ -51,8 +59,7 @@ const defineThematic = async url => {
     }
 
     const definedThematic = defineThematicByWordsCount(thematics)
-    console.log('theme defined!!!')
-    return { thematics, definedThematic }
+    return { definedThematic }
   } catch (e) {
     console.log(e)
     return

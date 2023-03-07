@@ -11,15 +11,21 @@ function transformSquidLogs(logs) {
 		log['method'] = fields[5]
 		log['user'] = fields[7]
 
-		if(log['method'] === 'GET' || log['method'] === 'CONNECT') {
+		if(log['method'] === 'GET') {
 			let url = fields[6]
 			let match
-			if(url.match(/http/)) {
-				match = url.match(/http:\/\/[a-z|а-я|.|\d+]+/i) || []
-			} else if(url.match(/https/)) {
+			if(url.match(/https/)) {
 				match = url.match(/https:\/\/[a-z|а-я|.|\d+]+/i) || []
+			} else if(url.match(/http/)) {
+				match = url.match(/http:\/\/([a-z|а-я|.|\d+]+)/i) || []
+				if(match[1]) {
+					match[0] = 'https://' + match[1]
+				}
 			} else {
 				match = url.match(/[a-z|а-я|.|\d+]+/i) || []
+				if(match.length) {
+					match[0] = 'https://' + match[0]
+				}
 			}
 
 			if(match.length) {
@@ -34,6 +40,9 @@ function transformSquidLogs(logs) {
 		}
 	})
 	
+	urlArray = new Set(urlArray)
+
+
 	return {logs: result, urlArray}
 }
 

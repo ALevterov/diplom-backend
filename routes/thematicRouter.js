@@ -5,7 +5,7 @@ const thematicController = require('../controllers/thematicController')
 
 router.get(
   '/',
-  thematicController.suckDick
+  thematicController.defineTheme
 )
 
 module.exports = router
