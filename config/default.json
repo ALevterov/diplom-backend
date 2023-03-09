@@ -1,3 +1,4 @@
 {
-  "ACCESS_SECRET_KEY": "supersecret322"
+  "ACCESS_SECRET_KEY": "super-secret-322-access",
+  "REFRESH_SECRET_KEY": "refresh-super-secret-key"
 }
