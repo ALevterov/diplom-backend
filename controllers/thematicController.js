@@ -12,38 +12,45 @@ let httpsAgent = new HttpsProxyAgent({
   rejectUnauthorized: false,
 })
 
-instance = axios.create({httpsAgent, proxy: false})
+// instance = axios.create({ httpsAgent, proxy: false })
+instance = axios.create()
 class ThematicController {
   async defineTheme(req, res, next) {
+    console.log('defineTheme')
     try {
-      const {logs, urlArray} = transformSquidLogs(getSquidLogs())
-      console.log(logs);
+      const { logs, urlArray } = transformSquidLogs(getSquidLogs())
+      console.log('urlArray', urlArray)
       const thematicArray = []
 
       for (let url of urlArray) {
         try {
           let thematic
-          const saved = await ClassifiedURLs.findOne({where: {url}}) // ищем тематику в базе
-          if(saved) {
+          const saved = await ClassifiedURLs.findOne({ where: { url } }) // ищем тематику в базе
+          if (saved) {
+            console.log('saved', saved)
             thematic = saved
-            thematicArray.push({thematic, url}) 
+            thematicArray.push({ thematic, url })
           } else {
-            let {definedThematic: thematic} = await defineThematic(url)
-            if(thematic) {
-              ClassifiedURLs.create({url, thematic}) // добавлеяем тематику в базу
-              thematicArray.push({thematic, url})
+            let { definedThematic: thematic } = await defineThematic(url)
+            console.log('DEFINED', thematic)
+            if (thematic !== 'null') {
+              await ClassifiedURLs.create({ url, thematic }) // добавлеяем тематику в базу
+              thematicArray.push({ thematic, url })
+            } else {
+              await ClassifiedURLs.create({ url, thematic: 'null' }) // добавлеяем тематику в базу
+              thematicArray.push({ thematic, url })
             }
           }
-        }
-        catch(e) {
-          console.log(e);
+        } catch (e) {
+          console.log(e)
           continue
-        } 
+        }
       }
-      classifyUserRequests(logs, thematicArray) // добавляем к каждому логу тематику
-      return res.json({response: logs})
+      const result = classifyUserRequests(logs, thematicArray) // добавляем к каждому логу тематику
+      return res.json({ response: result })
     } catch (e) {
       console.log(e)
+      next(e.message)
       res.json({ response: e.message })
     }
   }

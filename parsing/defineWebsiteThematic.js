@@ -14,7 +14,7 @@ let httpsAgent = new HttpsProxyAgent({
   rejectUnauthorized: false,
 })
 
-instance = axios.create({httpsAgent, proxy: false})
+instance = axios.create({ httpsAgent, proxy: false })
 // instance = axios.create()
 
 const { JSDOM } = jsdom
@@ -27,12 +27,12 @@ const defineThematic = async url => {
     })
 
     const { data } = await instance.get(url).catch(e => {
-      console.log(e.message);
-      return {data: null} // если есть ошибка, продолажем работать
+      console.log(e.message)
+      return { data: null } // если есть ошибка, продолажем работать
     })
 
-    if(data === null) {
-      return {definedThematic: null}
+    if (data === null) {
+      return { definedThematic: null }
     }
 
     const dom = new JSDOM(data)
@@ -54,7 +54,7 @@ const defineThematic = async url => {
         console.log(url + link + ' completed!!')
       } catch (e) {
         console.log(e)
-        continue
+        return { definedThematic: null }
       }
     }
 
@@ -62,7 +62,7 @@ const defineThematic = async url => {
     return { definedThematic }
   } catch (e) {
     console.log(e)
-    return
+    return { definedThematic: null }
   }
 }
 
